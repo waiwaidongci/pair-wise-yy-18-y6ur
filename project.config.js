@@ -29,8 +29,9 @@ module.exports = {
       label: '巡演装箱单',
       defaultStatus: '草稿',
       statuses: ['草稿', '已装箱', '巡演中', '返场清点中', '已闭环'],
-      required: ['showName', 'venue', 'play', 'headIds', 'accessoryIds'],
-      titleFields: ['showName', 'play']
+      required: ['showName', 'venue', 'play'],
+      titleFields: ['showName', 'play'],
+      defaults: { headIds: [], accessoryIds: [] }
     },
     lossReports: {
       label: '缺损追踪',
@@ -70,7 +71,10 @@ module.exports = {
   ],
   examples: [
     'GET /api/puppetHeads?play=火焰山&status=可演出 查询某剧目可用偶头',
-    'POST /api/tourBoxes 创建巡演装箱单',
-    'POST /api/lossReports 登记返场缺损或遗失'
+    'POST /api/tourBoxes/create 逐件核对后建立巡演装箱单',
+    'POST /api/tourBoxes/:id/seal 封箱 → /depart 出发（成员锁定）',
+    'POST /api/tourBoxes/:id/returnRegister 返场按件登记完好/缺损/遗失',
+    'POST /api/tourBoxes/:id/close 全员清点完毕闭环',
+    'GET /api/tourBoxes/:id/manifest 装箱清单与返场结果'
   ]
 };
